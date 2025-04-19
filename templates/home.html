@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detection</title>
+    <style>
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .profile-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        
+        .username {
+            margin-left: 8px;
+            color: white;
+        }
+        
+        .profile-dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #444;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .profile-dropdown .dropdown-content a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .profile-dropdown .dropdown-content a:hover {
+            background-color: #555;
+        }
+        
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        p {
+                text-align: justify;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+        
+            .navbar {
+                display: flex;
+                align-items: center;
+                justify-content: center; /* Center the logo */
+                background-color: #333;
+                padding: 15px 20px;
+                position: relative; /* Allows positioning of the side menus */
+                color: white;
+            }
+            
+            @keyframes rainbowGlow {
+                0% { text-shadow: 0 0 10px red, 0 0 20px orange, 0 0 30px yellow; }
+                20% { text-shadow: 0 0 10px orange, 0 0 20px yellow, 0 0 30px green; }
+                40% { text-shadow: 0 0 10px yellow, 0 0 20px green, 0 0 30px cyan; }
+                60% { text-shadow: 0 0 10px green, 0 0 20px cyan, 0 0 30px blue; }
+                80% { text-shadow: 0 0 10px cyan, 0 0 20px blue, 0 0 30px violet; }
+                100% { text-shadow: 0 0 10px blue, 0 0 20px violet, 0 0 30px red; }
+            }
+            
+            .navbar .logo {
+                font-size: 24px;
+                font-weight: bold;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                animation: rainbowGlow 3s infinite alternate; /* Apply animation */
+                color: rgb(9, 8, 8); /* Ensure text is visible */
+            }
+            
+            
+            .navbar ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+            }
+            
+            .navbar ul:first-child {
+                position: absolute;
+                left: 20px; /* Position left menu */
+            }
+            
+            .navbar ul:last-child {
+                position: absolute;
+                right: 20px; /* Position right menu */
+            }
+            
+        
+            .navbar ul li {
+                display: inline;
+            }
+        
+            .navbar ul li a {
+                color: white;
+                text-decoration: none;
+                font-size: 16px;
+            }
+        
+            .navbar ul li a:hover {
+                text-decoration: underline;
+            }
+        
+            /* Main Container */
+            .container {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                padding: 10px;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                color: rgb(26, 173, 227); /* Text color */
+                text-shadow: 0 0 10px rgba(14, 146, 202, 0.8), 
+                             0 0 20px rgba(12, 175, 139, 0.6), 
+                             0 0 30px rgba(110, 141, 17, 0.4);
+            }
+        
+            /* Top Section */
+            .top-section {
+                background-color: gray;
+                padding: 30px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 10px;
+                margin-bottom: 5px;
+                width: 100%;
+            }
+        
+            .top-section h1 {
+                margin-bottom: 10px;
+            }
+        
+            /* Bottom Section */
+            .bottom-section {
+                display: flex;
+                justify-content: space-between;
+                align-items: stretch;
+                gap: 20px;
+                width: 100%;
+            }
+            /* Left and Right Sections */
+.left-bottom, .right-bottom {
+    width: 50%;
+    height: 300px; /* Ensures both sections have equal height */
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Scrollable Left Bottom Section */
+.left-bottom {
+    background-color: #31545c;
+    color: white;
+    overflow-y: auto; /* Enables scrolling */
+    max-height: 300px; /* Prevents overflow beyond set height */
+    padding-right: 10px; /* Prevents text from touching scrollbar */
+    align-items: flex-start; /* Aligns content to start */
+    justify-content: flex-start; /* Ensures content starts from top properly */
+}
+
+/* Scrollbar Styling */
+.left-bottom::-webkit-scrollbar {
+    width: 8px;
+}
+
+.left-bottom::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+.left-bottom::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Right Section (Guidelines) */
+.right-bottom {
+    background-color: #4caf50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    max-height: 300px; /* Prevents overflow beyond set height */
+    overflow-y: auto; /* Enables scrolling */
+    padding-right: 10px; /* Prevents text from touching scrollbar */
+}
+
+/* Scrollbar Styling */
+.right-bottom::-webkit-scrollbar {
+    width: 8px;
+}
+
+.right-bottom::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+.right-bottom::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+            /* FAQs Formatting */
+            .faq {
+                text-align: left;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #444;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+    
+            .dropdown-content a {
+                color: white;
+                padding: 10px;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: #555;
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+            .faq div {
+                margin-bottom: 10px;
+            }
+        
+            .faq strong {
+                color: #FFD700;
+            }
+        
+            /* Guidelines Formatting */
+            .guidelines {
+                text-align: left;
+                padding-left: 20px;
+            }
+        
+            .guidelines ol {
+                padding-left: 20px;
+            }
+        
+            /* Responsive Layout */
+            @media (max-width: 768px) {
+                .bottom-section {
+                    flex-direction: column;
+                }
+        
+                .left-bottom, .right-bottom {
+                    width: 100%;
+                    height: auto; /* Allow height to adjust for smaller screens */
+                }
+            }
+            footer {
+                text-align: center;
+                margin-top: 10px;
+                padding: 10px;
+                background-color: #333;
+                color: white;
+            }
+        </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Services/Features</a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('url_phishing') }}">URL Phishing</a>
+                    <a href="{{ url_for('email_phishing') }}">Spear Phishing & Smishing</a>
+                </div>
+            </li>
+            
+        </ul>
+        <div class="logo">Phishing Detection using ML & NLP</div>
+        <ul>
+            {% if logged_in %}
+    <li class="profile-dropdown">
+        <a href="#">
+            <img src="https://cdn-icons-png.flaticon.com/512/7915/7915522.png" alt="Profile" class="profile-icon">
+            <span class="username">User</span>
+        </a>
+        <div class="dropdown-content">
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </li>
+    {% else %}
+    <li><a href="{{ url_for('login') }}">Login</a></li>
+    {% endif %}       </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- Top Section -->
+        <div class="top-section">
+            <h1>About</h1>
+            <p>
+                Phishing attacks have emerged as a major cybersecurity threat, tricking users into disclosing sensitive information through deceptive emails and malicious URLs. 
+                Traditional rule-based detection methods often fail to keep up with evolving attack tactics. 
+                To address this challenge, our research leverages machine learning (ML) and natural language processing (NLP) for phishing email and URL detection. 
+                We compare the effectiveness of four models—Multinomial Naïve Bayes, Logistic Regression, Voting Classifier, and Stacking Classifier—using key performance metrics such as accuracy, precision, recall, and F1-score. 
+                Our findings reveal that the Stacking Classifier, which integrates Multinomial Naïve Bayes and Logistic Regression, delivers the highest accuracy and robustness in phishing detection. 
+                By harnessing ML-driven approaches, this study demonstrates the potential of advanced techniques in strengthening cybersecurity defenses, mitigating phishing threats, and safeguarding users from online fraud.
+            </p>
+            <h2>Latest News</h2>
+            <p>The Anti Phishing Working Group (APWG)’s Q3 report observed 932,923 phishing attacks, up from 877,536 in Q2 2024. Social media platforms remain the most attacked sector.</p>
+            <a href="https://apwg.org/">Read More</a>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="bottom-section">
+            <div class="left-bottom">
+                <h2>FAQs</h2>
+                <div class="faq">
+                    <p></p>
+                    <div><strong>Q:</strong> What is phishing?</div>
+                    <div><strong>A:</strong> Phishing is a type of cyberattack where attackers impersonate a trusted entity to deceive individuals into revealing sensitive information like passwords, credit card numbers, or personal data.</div>
+
+                    <div><strong>Q:</strong> How does phishing typically work?</div>
+                    <div><strong>A:</strong> Phishing typically involves sending fraudulent emails, messages, or links that trick recipients into clicking malicious links or downloading malware.</div>
+
+                    <div><strong>Q:</strong> What should I do if I suspect an email is a phishing attempt?</div>
+                    <div><strong>A:</strong> Do not click on any links or download attachments. Verify the sender's email address, report the email to your organization or email provider, and delete the email if confirmed to be phishing.</div>
+
+                    <div><strong>Q:</strong> How can I protect myself from phishing attacks?</div>
+                    <div><strong>A:</strong> Use strong, unique passwords and enable multi-factor authentication. Keep software and antivirus programs updated. Avoid clicking on unknown links or downloading attachments from unverified sources.</div>
+                    <div><strong>Q:</strong> Can phishing occur outside of emails?</div>
+                    <div><strong>A:</strong> Yes, phishing can occur through SMS (smishing), voice calls (vishing), fake websites, and social media platforms.</div>
+                    <div><strong>Q:</strong> How can I protect myself from phishing attacks?</div>
+                    <div><strong>A:</strong> Use strong, unique passwords and enable multi-factor authentication. Keep software and antivirus programs updated. Avoid clicking on unknown links or downloading attachments from unverified sources. Verify the authenticity of requests for sensitive information.</div>
+                    <div><strong>Q:</strong> What are some tools to help detect phishing?</div>
+                    <div><strong>A:</strong> Anti-phishing browser extensions, email spam filters, and specialized tools like phishing detection applications.</div>
+                    <div><strong>Q:</strong> Are there any laws against phishing?</div>
+                    <div><strong>A:</strong> Yes, phishing is illegal in many countries and punishable under cybercrime laws.</div>
+                    <div><strong>Q:</strong> What should I do if I’ve fallen victim to a phishing attack?</div>
+                    <div><strong>A:</strong> Immediately change passwords for affected accounts. Contact your bank if financial details were compromised. Monitor your accounts for unauthorized activity. Report the attack to authorities or anti-phishing organizations (like APWG).</div>
+                    <div><strong>Q:</strong> How can I report phishing emails or websites?</div>
+                    <div><strong>A:</strong> Forward phishing emails to organizations like the Anti-Phishing Working Group (reportphishing@apwg.org) or your email provider (e.g., abuse@gmail.com). Many browsers also allow you to report phishing websites directly.</div>
+                </div>
+            </div>
+
+            <div class="right-bottom">
+                <h2>Guidelines</h2>
+                <div class="guidelines">
+                    <ol>
+                        <li>Verify the sender's identity by checking the email address for discrepancies.</li>
+                        <li>Be cautious of emails that create a sense of urgency or fear.</li>
+                        <li>Look for generic greetings instead of personalized salutations.</li>
+                        <li>Hover over links to see the actual URL before clicking.</li>
+                        <li>Do not open attachments from unknown or suspicious sources.</li>
+                        <li>Use email filtering tools and antivirus software to detect phishing attempts.</li>
+                        <li>Be skeptical of unsolicited requests for personal information.</li>
+                        <li>Ensure websites have a valid SSL certificate (look for "https://").</li>
+                        <li>Regularly monitor your accounts for unauthorized activity.</li>
+                        <li>Trust your instincts; if something feels off, investigate further.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <footer>
+            &copy;Phishing Detection using ML & NLP
+        </footer>
+    </div>
+
+</body>
+<script>
+    document.body.style.zoom = "100%";
+    document.getElementById("logout").addEventListener("click", function() {
+        // Redirect to home page before login
+        window.location.href = "/home";
+    });
+</script>
+</html>

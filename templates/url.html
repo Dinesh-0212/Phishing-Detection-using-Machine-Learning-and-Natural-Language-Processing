@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL-Phishing</title>
+    <style>
+        @keyframes glow-red {
+            0% { text-shadow: 0 0 5px red, 0 0 10px orange; }
+            50% { text-shadow: 0 0 10px red, 0 0 20px orange; }
+            100% { text-shadow: 0 0 5px red, 0 0 10px orange; }
+        }
+        
+        @keyframes glow-green {
+            0% { text-shadow: 0 0 5px green, 0 0 10px cyan; }
+            50% { text-shadow: 0 0 10px green, 0 0 20px cyan; }
+            100% { text-shadow: 0 0 5px green, 0 0 10px cyan; }
+        }
+        
+        .glowing-reason-phishing {
+            font-weight: bold;
+            color: red;
+            animation: glow-red 1.5s infinite alternate;
+        }
+        
+        .glowing-reason-safe {
+            font-weight: bold;
+            color: green;
+            animation: glow-green 1.5s infinite alternate;
+        }
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .profile-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        
+        .username {
+            margin-left: 8px;
+            color: white;
+        }
+        
+        .profile-dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #444;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        
+        .profile-dropdown .dropdown-content a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .profile-dropdown .dropdown-content a:hover {
+            background-color: #555;
+        }
+        
+        .profile-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #333;
+            padding: 15px 20px;
+            position: relative;
+            color: white;
+        }
+
+        @keyframes rainbowGlow {
+            0% { text-shadow: 0 0 10px red, 0 0 20px orange, 0 0 30px yellow; }
+            20% { text-shadow: 0 0 10px orange, 0 0 20px yellow, 0 0 30px green; }
+            40% { text-shadow: 0 0 10px yellow, 0 0 20px green, 0 0 30px cyan; }
+            60% { text-shadow: 0 0 10px green, 0 0 20px cyan, 0 0 30px blue; }
+            80% { text-shadow: 0 0 10px cyan, 0 0 20px blue, 0 0 30px violet; }
+            100% { text-shadow: 0 0 10px blue, 0 0 20px violet, 0 0 30px red; }
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: rainbowGlow 3s infinite alternate;
+            color: rgb(9, 8, 8);
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar ul:first-child {
+            position: absolute;
+            left: 20px;
+        }
+
+        .navbar ul:last-child {
+            position: absolute;
+            right: 20px;
+        }
+
+        .navbar ul li {
+            display: inline;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .navbar ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #444;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* URL Input Section */
+        .url-check-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .url-check-container h2 {
+            color: rgb(16, 19, 20);
+            text-shadow: 0 0 10px rgba(14, 146, 202, 0.8), 
+                         0 0 20px rgba(12, 175, 139, 0.6), 
+                         0 0 30px rgba(110, 141, 17, 0.4);
+        }
+
+        .url-input {
+            width: 50%;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .check-btn {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .check-btn:hover {
+            background-color: #388e3c;
+        }
+        .url-check-container {
+            text-align: center;
+            margin-top: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding: 200px 0;
+            background-image: url(https://zvelo.com/wp-content/uploads/2020/07/phishing-attack-topologies.jpg); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 10px; /* Optional: Adds rounded corners */
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* Optional: Adds shadow */
+        }
+        
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 5px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <!-- Navigation Bar -->
+<nav class="navbar">
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li class="dropdown">
+            <a href="#">Services/Features</a>
+            <div class="dropdown-content">
+                <a href="{{ url_for('url_phishing') }}">URL Phishing</a>
+                <a href="{{ url_for('email_phishing') }}">Spear Phishing & Smishing</a>
+            </div>
+        </li>
+    </ul>
+    <div class="logo">Url Phishing</div>
+    <ul>
+        {% if logged_in %}
+            <li class="profile-dropdown">
+                <a href="#">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7915/7915522.png" alt="Profile" class="profile-icon">
+                    <span class="username">User</span>
+                </a>
+                <div class="dropdown-content">
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                </div>
+            </li>
+        {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+<div class="url-check-container">
+    <h2 style="color: white;">Enter a URL to Check for Phishing</h2>
+    <form action="{{ url_for('url_predict') }}" method="post">
+        <textarea class="url-input" name="url" placeholder="enter url" rows="1" cols="1" required>{{ url_text }}</textarea>
+
+        <br>
+        <button type="submit" class="check-btn">Check URL</button>
+    </form>
+    <br>
+    {% if url_result %}
+        <div class="result" style="color:black;">
+            <h2 style="color: {{ prediction_color }};">{{ url_result }}</h2>
+            <h3>Reasons:</h3>
+            <ul>
+                {% for reason in url_reasons %}
+                {% if prediction_color == "red" %}
+                <li class="glowing-reason-phishing" style="color: black;">{{ reason }}</li>
+            {% else %}
+                <li class="glowing-reason-safe" style="color: black;">{{ reason }}</li>
+            {% endif %}                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+    
+
+    <footer>
+        &copy; Phishing Detection using ML & NLP
+    </footer>
+
+</body>
+<script>
+    document.body.style.zoom = "100%";
+</script>
+</html>

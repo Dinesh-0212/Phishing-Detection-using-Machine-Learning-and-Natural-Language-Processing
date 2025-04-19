@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Phishing Detection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            background-image: url(https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2023/04/28131602/sl-digital-face-artificial-intelligence-blue-red-1200-800x450.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #333;
+            padding: 15px 20px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            color: white;
+        }
+        .navbar ul:first-child {
+            position: absolute;
+            left: 20px;
+        }
+
+        .navbar ul:last-child {
+            position: absolute;
+            right: 20px;
+        }
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgb(255, 255, 255);
+            text-shadow: 0 0 10px red, 0 0 20px yellow, 0 0 30px green;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            position: absolute;
+            left: 20px;
+        }
+
+        .navbar ul li {
+            display: inline;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .navbar ul li a:hover {
+            text-decoration: underline;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #444;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .login-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 100px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            color: white;
+            width: 450px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 10px;
+        }
+
+        .input-box {
+            width: 100%;
+    padding: 10px; /* Increased padding for a bigger text field */
+    margin: 10px 0;
+    font-size: 18px; /* Increased font size */
+    border-radius: 5px;
+    border: none;
+    height: 50px;
+        }
+
+        .login-btn {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .login-btn:hover {
+            background-color: #388e3c;
+        }
+        .hint {
+            font-size: 14px;
+            color: #ccc;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Services/Features</a>
+                <div class="dropdown-content">
+                    <a href="#">URL Phishing</a>
+                    <a href="#">Spear Phishing & Smishing</a>
+                </div>
+            </li>
+        </ul>
+        <div class="logo">Login to access Services/Features</div>
+    </nav>
+
+
+    <div class="login-container">
+        <h2>Login</h2>
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+        <form action="/login" method="post">
+            <input type="text" class="input-box" name="username" placeholder="Enter Username" required>
+            <input type="password" class="input-box" name="password" placeholder="Enter Password" required>
+            <button type="submit" class="login-btn">Login</button>
+            <p class="hint">Hint: admin</p>
+        </form>
+    </div>
+
+    <footer>
+        &copy; Phishing Detection using ML & NLP
+    </footer>
+
+</body>
+<script>
+    document.body.style.zoom = "100%";
+</script>
+</html>
