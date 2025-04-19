@@ -129,5 +129,6 @@ http://127.0.0.1:5000
 # 6️⃣ Deactivate virtual environment after use
 deactivate
 
+---
 
 > ⚠️ **Disclaimer**: This project is intended for academic and research purposes. It should not be used as a standalone security solution for critical infrastructure without proper validation and testing.
