@@ -100,4 +100,34 @@ And get real-time phishing detection results.
 
 ---
 
+## ⚙️ Project Setup & Usage
+
+To set up and run the Phishing Detection project locally, follow these steps:
+
+```bash
+# 1️⃣ Clone the repository
+git clone https://github.com/Dinesh-0212/Phishing-Detection-using-Machine-Learning-and-Natural-Language-Processing.git
+cd Phishing-Detection-using-Machine-Learning-and-Natural-Language-Processing
+
+# 2️⃣ Create a virtual environment
+python -m venv venv
+venv\Scripts\activate         # On Windows
+# source venv/bin/activate    # On Linux/Mac
+
+# 3️⃣ Upgrade pip and install requirements
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+
+# 4️⃣ Run the application
+python app.py                 # For the Flask web interface
+# OR
+python phishing_detection.py  # For a standalone script (if applicable)
+
+# 5️⃣ Open in browser (for web interface)
+http://127.0.0.1:5000
+
+# 6️⃣ Deactivate virtual environment after use
+deactivate
+
+
 > ⚠️ **Disclaimer**: This project is intended for academic and research purposes. It should not be used as a standalone security solution for critical infrastructure without proper validation and testing.
